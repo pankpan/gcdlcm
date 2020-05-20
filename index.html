@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<title>gcd/lcm Calculator</title>
+<style>
+input, button, div { font-size: 36px; }
+span { color:blue; font-weight: bold; }
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script> 
+<script src="/js/math.min.js"></script>
+</head>
+
+<body>
+<div>gcd/lcm Calculator</div>
+<input id=a type=tel size=4 maxlength=5 onkeypress="return isNumberKey(event)">
+<input id=b type=tel size=4 maxlength=5 onkeypress="return isNumberKey(event)">
+<input id=c type=tel size=4 maxlength=5 onkeypress="return isNumberKey(event)">
+<input id=d type=tel size=4 maxlength=5 onkeypress="return isNumberKey(event)">
+<button id=calc>Calculate</button>
+<button id=clear>Clear</button>
+<br>
+<div id=r></div>
+
+<script>
+function isNumberKey(evt)
+{
+var charCode = evt.which;
+if (charCode > 31 && (charCode < 48 || charCode > 57))
+return false;
+return true;
+}
+$("#a").focus();
+$("#calc").click(function(){
+    var l,g,arr=[];
+    if ($("#a").val().length>0) arr.push($("#a").val());
+    if ($("#b").val().length>0) arr.push($("#b").val());
+    if ($("#c").val().length>0) arr.push($("#c").val());
+    if ($("#d").val().length>0) arr.push($("#d").val());
+    if (arr.length>=2) {
+        if (arr.length==2) {
+            g=math.gcd(Number(arr[0]),Number(arr[1]));
+            l=math.lcm(Number(arr[0]),Number(arr[1]));
+            numbers="(" + arr[0] + "," + arr[1] + ")"
+        } else if (arr.length==3) {
+            g=math.gcd(Number(arr[0]),Number(arr[1]),Number(arr[2]));
+            l=math.lcm(Number(arr[0]),Number(arr[1]),Number(arr[2]));
+            numbers="(" + arr[0] + "," + arr[1] + "," + arr[2] + ")"
+        } else {
+            g=math.gcd(Number(arr[0]),Number(arr[1]),Number(arr[2]),Number(arr[3]));
+            l=math.lcm(Number(arr[0]),Number(arr[1]),Number(arr[2]),Number(arr[3]));
+            numbers="(" + arr[0] + "," + arr[1] + "," + arr[2] + "," + arr[3] + ")"
+        }        
+        $("#r").append("gcd"+ numbers + " = <span>" + g.toString()+ "</span> &nbsp; lcm"+ numbers + " = <span>" + l.toString()+ "</span><br>");
+    } else {
+        $("#r").append("<span style='color:red;'>Please enter at least 2 numbers</span><br>");
+    }
+});
+$("#clear").click(function(){
+    $("#a").val("");
+    $("#b").val("");
+    $("#c").val("");
+    $("#d").val("");
+    $("#r").text("");
+    $("#a").focus();
+});
+</script>
+
+</body>
+</html>
